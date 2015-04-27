@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F0C51E16447B9FF3ED534BE /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D9626DE2BEBD852D620C1E /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		938D91AB1AEEDE62009BB90A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D91AA1AEEDE62009BB90A /* AppDelegate.swift */; };
 		938D91AD1AEEDE62009BB90A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D91AC1AEEDE62009BB90A /* ViewController.swift */; };
 		938D91B01AEEDE62009BB90A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 938D91AE1AEEDE62009BB90A /* Main.storyboard */; };
 		938D91B21AEEDE62009BB90A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 938D91B11AEEDE62009BB90A /* Images.xcassets */; };
 		938D91B51AEEDE62009BB90A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 938D91B31AEEDE62009BB90A /* LaunchScreen.xib */; };
 		938D91C11AEEDE62009BB90A /* zombieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D91C01AEEDE62009BB90A /* zombieTests.swift */; };
+		938D91CB1AEEE045009BB90A /* bloc zombie transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 938D91CA1AEEE045009BB90A /* bloc zombie transparent.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,10 @@
 		938D91BA1AEEDE62009BB90A /* zombieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zombieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		938D91BF1AEEDE62009BB90A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		938D91C01AEEDE62009BB90A /* zombieTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zombieTests.swift; sourceTree = "<group>"; };
+		938D91CA1AEEE045009BB90A /* bloc zombie transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bloc zombie transparent.png"; sourceTree = "<group>"; };
+		9A60AE3BE60EE41D2B5AC080 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		C3C9396EECF69333E362EBF9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		F5D9626DE2BEBD852D620C1E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F0C51E16447B9FF3ED534BE /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,12 +63,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F76DDD84C1D701A5047F3EC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F5D9626DE2BEBD852D620C1E /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		757125DA857F6A40F3EA5515 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9A60AE3BE60EE41D2B5AC080 /* Pods.debug.xcconfig */,
+				C3C9396EECF69333E362EBF9 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		938D919C1AEEDE62009BB90A = {
 			isa = PBXGroup;
 			children = (
 				938D91A71AEEDE62009BB90A /* zombie */,
 				938D91BD1AEEDE62009BB90A /* zombieTests */,
 				938D91A61AEEDE62009BB90A /* Products */,
+				757125DA857F6A40F3EA5515 /* Pods */,
+				4F76DDD84C1D701A5047F3EC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +116,7 @@
 		938D91A81AEEDE62009BB90A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				938D91CA1AEEE045009BB90A /* bloc zombie transparent.png */,
 				938D91A91AEEDE62009BB90A /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -119,9 +146,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 938D91C41AEEDE62009BB90A /* Build configuration list for PBXNativeTarget "zombie" */;
 			buildPhases = (
+				B7CD0695479480EE965F4791 /* Check Pods Manifest.lock */,
 				938D91A11AEEDE62009BB90A /* Sources */,
 				938D91A21AEEDE62009BB90A /* Frameworks */,
 				938D91A31AEEDE62009BB90A /* Resources */,
+				D398BE91EEDEEF7A07A68565 /* Copy Pods Resources */,
+				B120DEED762604A1260D6ACE /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -194,6 +224,7 @@
 			files = (
 				938D91B01AEEDE62009BB90A /* Main.storyboard in Resources */,
 				938D91B51AEEDE62009BB90A /* LaunchScreen.xib in Resources */,
+				938D91CB1AEEE045009BB90A /* bloc zombie transparent.png in Resources */,
 				938D91B21AEEDE62009BB90A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -206,6 +237,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B120DEED762604A1260D6ACE /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B7CD0695479480EE965F4791 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D398BE91EEDEEF7A07A68565 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		938D91A11AEEDE62009BB90A /* Sources */ = {
@@ -340,6 +419,7 @@
 		};
 		938D91C51AEEDE62009BB90A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A60AE3BE60EE41D2B5AC080 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = zombie/Info.plist;
@@ -350,6 +430,7 @@
 		};
 		938D91C61AEEDE62009BB90A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3C9396EECF69333E362EBF9 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = zombie/Info.plist;
@@ -411,6 +492,7 @@
 				938D91C61AEEDE62009BB90A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		938D91C71AEEDE62009BB90A /* Build configuration list for PBXNativeTarget "zombieTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +501,7 @@
 				938D91C91AEEDE62009BB90A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
