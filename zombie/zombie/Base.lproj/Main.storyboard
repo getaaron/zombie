@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tW1-OJ-Pg2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Zombie Research-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="zombie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Zombie Research" id="BYZ-38-t0r" customClass="ViewController" customModule="zombie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -25,10 +25,10 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XRq-m8-2VD">
-                                <rect key="frame" x="44" y="154" width="173" height="49"/>
+                                <rect key="frame" x="239" y="84" width="122" height="49"/>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="30"/>
                                 <size key="titleShadowOffset" width="1" height="0.0"/>
-                                <state key="normal" title="Get Started">
+                                <state key="normal" title="Consent">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -39,32 +39,83 @@
                                     <color key="titleColor" red="0.50196081399917603" green="0.25098040699958801" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="getStartedTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="36d-NN-eQm"/>
+                                    <action selector="consentTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cTB-z0-iKw"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bUH-KP-D54">
+                                <rect key="frame" x="267" y="143" width="66" height="30"/>
+                                <state key="normal" title="View PDF">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="viewPDFTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xk4-8m-ULq"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="XRq-m8-2VD" secondAttribute="centerX" id="5eY-a8-Eyd"/>
+                            <constraint firstItem="bUH-KP-D54" firstAttribute="centerX" secondItem="XRq-m8-2VD" secondAttribute="centerX" id="B5O-sH-nom"/>
                             <constraint firstItem="XRq-m8-2VD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="28" id="Dbg-B4-ZsD"/>
                             <constraint firstItem="NrD-CF-Ewk" firstAttribute="leading" secondItem="XRq-m8-2VD" secondAttribute="trailing" constant="-233" id="Fjh-sr-hGi"/>
-                            <constraint firstItem="XRq-m8-2VD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="134" id="Q0g-tS-gRW"/>
+                            <constraint firstItem="XRq-m8-2VD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="Q0g-tS-gRW"/>
                             <constraint firstItem="NrD-CF-Ewk" firstAttribute="top" secondItem="XRq-m8-2VD" secondAttribute="bottom" constant="-203" id="Qcq-dh-xJI"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NrD-CF-Ewk" secondAttribute="bottom" id="RmH-BF-NY0"/>
                             <constraint firstItem="NrD-CF-Ewk" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="fC2-RK-G19"/>
                             <constraint firstAttribute="trailingMargin" secondItem="NrD-CF-Ewk" secondAttribute="trailing" id="mtg-n9-HIE"/>
                             <constraint firstAttribute="trailing" secondItem="NrD-CF-Ewk" secondAttribute="trailing" id="oRo-hc-Kit"/>
+                            <constraint firstItem="bUH-KP-D54" firstAttribute="top" secondItem="XRq-m8-2VD" secondAttribute="bottom" constant="10" id="zMB-xx-PPn"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="Fjh-sr-hGi"/>
                                 <exclude reference="Qcq-dh-xJI"/>
                                 <exclude reference="mtg-n9-HIE"/>
+                                <exclude reference="Dbg-B4-ZsD"/>
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="Zombie Research Corp.™" id="q6b-50-XHe"/>
+                    <connections>
+                        <outlet property="viewPDFButton" destination="bUH-KP-D54" id="Pcf-Mo-DSY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="952" y="284"/>
+        </scene>
+        <!--View PDF-->
+        <scene sceneID="qfG-cr-u4E">
+            <objects>
+                <viewController storyboardIdentifier="webViewController" id="IZl-ZR-9gc" sceneMemberID="viewController">
+                    <webView key="view" contentMode="scaleToFill" scalesPageToFit="YES" id="KnF-2N-1x2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </webView>
+                    <navigationItem key="navigationItem" title="View PDF" id="dLq-1c-fIs"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eIW-Aq-Jp0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1769" y="315"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="maU-uo-F9H">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tW1-OJ-Pg2" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fTb-54-0B3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="8B5-rr-Fh6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H5A-Gr-4ad" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="-409"/>
         </scene>
     </scenes>
     <resources>
