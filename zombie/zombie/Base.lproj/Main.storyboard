@@ -51,6 +51,42 @@
                                     <action selector="viewPDFTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xk4-8m-ULq"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ir4-2t-xbw">
+                                <rect key="frame" x="169" y="242" width="263" height="49"/>
+                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="30"/>
+                                <size key="titleShadowOffset" width="1" height="0.0"/>
+                                <state key="normal" title="The Walking Test">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.50196081400000003" green="0.25098040700000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" red="0.50196081400000003" green="0.25098040700000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="walkingTestTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uet-ca-wAZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tw6-Pt-bQI">
+                                <rect key="frame" x="246" y="183" width="108" height="49"/>
+                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="30"/>
+                                <size key="titleShadowOffset" width="1" height="0.0"/>
+                                <state key="normal" title="Survey">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.50196081400000003" green="0.25098040700000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" red="0.50196081400000003" green="0.25098040700000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="surveyTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HuI-wh-GiO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -61,9 +97,13 @@
                             <constraint firstItem="XRq-m8-2VD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="Q0g-tS-gRW"/>
                             <constraint firstItem="NrD-CF-Ewk" firstAttribute="top" secondItem="XRq-m8-2VD" secondAttribute="bottom" constant="-203" id="Qcq-dh-xJI"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NrD-CF-Ewk" secondAttribute="bottom" id="RmH-BF-NY0"/>
+                            <constraint firstItem="Ir4-2t-xbw" firstAttribute="top" secondItem="tw6-Pt-bQI" secondAttribute="bottom" constant="10" id="YBl-oQ-CN4"/>
                             <constraint firstItem="NrD-CF-Ewk" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="fC2-RK-G19"/>
                             <constraint firstAttribute="trailingMargin" secondItem="NrD-CF-Ewk" secondAttribute="trailing" id="mtg-n9-HIE"/>
                             <constraint firstAttribute="trailing" secondItem="NrD-CF-Ewk" secondAttribute="trailing" id="oRo-hc-Kit"/>
+                            <constraint firstItem="Ir4-2t-xbw" firstAttribute="centerX" secondItem="tw6-Pt-bQI" secondAttribute="centerX" id="oob-Ap-FIM"/>
+                            <constraint firstItem="bUH-KP-D54" firstAttribute="centerX" secondItem="tw6-Pt-bQI" secondAttribute="centerX" id="qh6-xP-oJ3"/>
+                            <constraint firstItem="tw6-Pt-bQI" firstAttribute="top" secondItem="bUH-KP-D54" secondAttribute="bottom" constant="10" id="rq1-3P-wQC"/>
                             <constraint firstItem="bUH-KP-D54" firstAttribute="top" secondItem="XRq-m8-2VD" secondAttribute="bottom" constant="10" id="zMB-xx-PPn"/>
                         </constraints>
                         <variation key="default">
@@ -77,7 +117,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Zombie Research Corp.™" id="q6b-50-XHe"/>
                     <connections>
+                        <outlet property="surveyButton" destination="tw6-Pt-bQI" id="BFC-7Q-N4q"/>
                         <outlet property="viewPDFButton" destination="bUH-KP-D54" id="Pcf-Mo-DSY"/>
+                        <outlet property="walkingTestButton" destination="Ir4-2t-xbw" id="8bP-2A-LPD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
