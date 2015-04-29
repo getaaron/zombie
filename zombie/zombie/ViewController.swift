@@ -66,32 +66,13 @@ class ViewController: UIViewController, ORKTaskViewControllerDelegate {
     }
     
     func printDataWithResult(result : ORKResult) {
-        let data = NSKeyedArchiver.archivedDataWithRootObject(result)
         var error : NSError? = nil
-        var format : NSPropertyListFormat? = nil
-        
-        if let dictionary = NSPropertyListSerialization.propertyListWithData(data, options: 0, format: nil, error: &error) as? NSDictionary {
-            println("yay!!!")
+
+        if let object = ORKESerializer.JSONObjectForObject(result, error: &error) {
+            println("Results JSON:\n\n\(object)")
         } else {
-            println(":-( \(error)")
+            println("Error:\n\n\(error)")
         }
-        
-        
-//        let formatter = ORKJSONLogFormatter()
-//        var handleError : NSError? = nil
-//        if let fileHandle = NSFileHandle(forWritingToURL: path(), error: &handleError) {
-//            let data = NSKeyedArchiver.archivedDataWithRootObject(result)
-//            if formatter.canAcceptLogObject(data) {
-//                if formatter.appendObject(data, fileHandle: fileHandle, error: nil) {
-//                    println("yay!")
-//                } else {
-//                    println(":-(")
-//                }
-//                
-//            }
-//        } else {
-//            println("handle error: \(handleError)")
-//        }
     }
 }
 
