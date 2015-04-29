@@ -80,13 +80,13 @@ class ViewController: UIViewController, ORKTaskViewControllerDelegate {
 
 extension ViewController {
     func generatePDFData() {
-        // let document = consentDocument.copy() as! ORKConsentDocument // This works
+        let document = consentDocument.copy() as! ORKConsentDocument // This works
         
         if let signatureResult = taskViewController.result.stepResultForStepIdentifier("consent review step identifier")?.firstResult as? ORKConsentSignatureResult {
-            signatureResult.applyToDocument(consentDocument)
+            signatureResult.applyToDocument(document)
         }
         
-        consentDocument.makePDFWithCompletionHandler { (data, error) -> Void in
+        document.makePDFWithCompletionHandler { (data, error) -> Void in
             if let data = data where data.length > 0 {
                 // data is not nil
                 self.PDFData = data
@@ -197,6 +197,8 @@ extension ViewController {
         let valuePickerAnswerFormat = ORKAnswerFormat.valuePickerAnswerFormatWithTextChoices(choices)
         let valuePickerQuestionStep = ORKQuestionStep(identifier: "value picker question step identifier", title: "Current Feelings", answer: valuePickerAnswerFormat)
         valuePickerQuestionStep.text = "What's the primary emotion you're feeling right now?"
+        
+        steps += [valuePickerQuestionStep]
         
         // ORKBooleanAnswerFormat lets the user pick Yes or No
 
