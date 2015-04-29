@@ -202,7 +202,7 @@ extension ViewController {
         // ORKQuestionStep asks questions and accepts answers based on the ORKAnswerFormat provided
         
         // ORKScaleAnswerFormat presents a slider to pick a number from a scale
-        let scaleAnswerFormat = ORKAnswerFormat.scaleAnswerFormatWithMaxValue(10, minValue: 1, step: 1, defaultValue: NSInteger.max)
+        let scaleAnswerFormat = ORKAnswerFormat.scaleAnswerFormatWithMaximumValue(10, minimumValue: 1, defaultValue: NSInteger.max, step: 1, vertical: false)
         let scaleQuestionStep = ORKQuestionStep(identifier: "scale question step identifier", title: "Likelihood to Eat Brains", answer: scaleAnswerFormat)
         scaleQuestionStep.text = "If presented with a giant plate of delicious brains, how likely would you be to eat them?"
 
