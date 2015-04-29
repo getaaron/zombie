@@ -28,6 +28,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 #import <AVFoundation/AVFoundation.h>
 
 #import "ORKVisualConsentTransitionAnimator.h"
@@ -36,7 +37,6 @@
 
 #import "ORKEAGLMoviePlayerView.h"
 #import "ORKVisualConsentStepViewController_Internal.h"
-
 
 
 // Internal object to hold the direction we're animating, the phase of the animation, and the animation completion handler.
@@ -54,14 +54,16 @@
 
 @end
 
+
 @implementation ORKVisualConsentAnimationContext
 
-
 @end
+
 
 @interface ORKVisualConsentTransitionAnimator() <AVPlayerItemOutputPullDelegate>
 
 @end
+
 
 @implementation ORKVisualConsentTransitionAnimator {
     __weak ORKVisualConsentStepViewController *_stepViewController;
@@ -80,8 +82,7 @@
 }
 
 - (instancetype)initWithVisualConsentStepViewController:(ORKVisualConsentStepViewController *)stepViewController
-                                               movieURL:(NSURL *)movieURL
-{
+                                               movieURL:(NSURL *)movieURL {
     self = [super init];
     if (self) {
         NSParameterAssert(stepViewController != nil);
@@ -95,7 +96,7 @@
         
         // Setup CADisplayLink which will callback displayPixelBuffer: at every vsync.
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkCallback:)];
-        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         [_displayLink setPaused:YES];
         
         // Setup AVPlayerItemVideoOutput with the required pixelbuffer attributes.
@@ -103,8 +104,6 @@
         _videoOutput = [[AVPlayerItemVideoOutput alloc] initWithPixelBufferAttributes:pixBuffAttributes];
         _videoOutputQueue = dispatch_queue_create("_ork_animationVideoQueue", DISPATCH_QUEUE_SERIAL);
         [_videoOutput setDelegate:self queue:_videoOutputQueue];
-        
-        
     }
     return self;
 }
@@ -113,16 +112,13 @@
     return _movieURL;
 }
 
-
 - (void)animateTransitionWithDirection:(UIPageViewControllerNavigationDirection)direction
                        withLoadHandler:(ORKVisualConsentAnimationCompletionHandler)loadHandler
-                     completionHandler:(ORKVisualConsentAnimationCompletionHandler)handler
-{
+                     completionHandler:(ORKVisualConsentAnimationCompletionHandler)handler {
     ORKVisualConsentAnimationContext *context = [ORKVisualConsentAnimationContext new];
     context.handler = handler;
     context.direction = direction;
     context.loadHandler = loadHandler;
-    
     
     _playerItem = [AVPlayerItem playerItemWithURL:_movieURL];
     
@@ -135,10 +131,7 @@
     [self attemptAnimationWithContext:context];
 }
 
-
-- (void)attemptAnimationWithContext:(ORKVisualConsentAnimationContext *)context
-{
-    
+- (void)attemptAnimationWithContext:(ORKVisualConsentAnimationContext *)context {
     BOOL playerIsReady = [_moviePlayer status] == AVPlayerStatusReadyToPlay;
     BOOL playerItemIsReady = CMTimeGetSeconds([_playerItem duration]) > 0;
     
@@ -170,9 +163,7 @@
     }
 }
 
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     ORKVisualConsentAnimationContext *animationContext = (__bridge ORKVisualConsentAnimationContext *)context;
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -199,8 +190,7 @@
     [self finishAnimationWithContext:_pendingContext];
 }
 
-- (void)performAnimationWithContext:(ORKVisualConsentAnimationContext *)context
-{
+- (void)performAnimationWithContext:(ORKVisualConsentAnimationContext *)context {
     AVPlayer *moviePlayer = _moviePlayer;
 
     __weak AVPlayer *weakPlayer = moviePlayer;
@@ -220,7 +210,6 @@
             }];
 }
 
-
 - (void)finishAnimationWithContext:(ORKVisualConsentAnimationContext *)context {
     if (context == _pendingContext) {
         _pendingContext = nil;
@@ -234,8 +223,6 @@
     context.handler = nil;
     // Make sure the context is released
     context.selfRef = nil;
-    
-    
 }
 
 #pragma mark - CADisplayLink Callback
@@ -254,8 +241,7 @@
     }
 }
 
-- (void)displayLinkCallback:(CADisplayLink *)sender
-{
+- (void)displayLinkCallback:(CADisplayLink *)sender {
     /*
      The callback gets called once every Vsync.
      Using the display link's timestamp and duration we can compute the next time the screen will be refreshed, and copy the pixel buffer for that time
@@ -292,8 +278,7 @@
 
 #pragma mark - AVPlayerItemOutputPullDelegate
 
-- (void)outputMediaDataWillChange:(AVPlayerItemOutput *)sender
-{
+- (void)outputMediaDataWillChange:(AVPlayerItemOutput *)sender {
     // Restart display link.
     [_displayLink setPaused:NO];
     _frameCounter = 0;
@@ -321,6 +306,5 @@
     [self finish];
     [_displayLink invalidate];
 }
-
 
 @end

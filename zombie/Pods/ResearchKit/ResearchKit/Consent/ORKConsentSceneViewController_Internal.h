@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2015, Apple Inc. All rights reserved.
+ Copyright (c) 2015, Ricardo Sánchez-Sáez.
  
  Redistribution and use in source and binary forms, with or without modification,
  are permitted provided that the following conditions are met:
@@ -29,21 +29,13 @@
  */
 
 
-#import "UIApplication+ResearchKit.h"
-#import "UIResponder+ResearchKit.h"
+#import "ORKStepViewController.h"
 
-@implementation UIApplication (ResearchKit)
 
-- (UIResponder *)ork_currentFirstResponder {
-    NSMutableArray *sender = [NSMutableArray new] ;
-    [self sendAction:@selector(ork_updateCurrentFirstResponder:)
-                                               to:nil
-                                             from:sender
-                                         forEvent:nil];
-    
-    
-    return [sender firstObject];
-}
+@interface ORKConsentSceneViewController ()
 
+@property (nonatomic, readonly) UIScrollView *scrollView;
+
+- (void)scrollToTopAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion;
 
 @end

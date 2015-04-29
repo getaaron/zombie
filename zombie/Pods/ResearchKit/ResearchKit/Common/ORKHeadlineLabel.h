@@ -28,7 +28,9 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 #import "ORKLabel.h"
+
 
 /**
  *  Primary title for any step view controller.
@@ -36,6 +38,6 @@
 ORK_CLASS_AVAILABLE
 @interface ORKHeadlineLabel : ORKLabel
 
-@property (nonatomic,assign) BOOL useSurveyMode;
+@property (nonatomic, assign) BOOL useSurveyMode;
 
 @end

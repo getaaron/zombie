@@ -1,6 +1,7 @@
 /*
  Copyright (c) 2015, Apple Inc. All rights reserved.
- 
+ Copyright (c) 2015, Ricardo Sánchez-Sáez.
+
  Redistribution and use in source and binary forms, with or without modification,
  are permitted provided that the following conditions are met:
  
@@ -42,24 +43,22 @@
 #import "ORKStepHeaderView_Internal.h"
 #import "ORKNavigationContainerView_Internal.h"
 
+
 @interface ORKConsentSceneView : ORKVerticalContainerView
 
 @property (nonatomic, strong) ORKConsentSection *consentSection;
 
 @end
 
+
 @implementation ORKConsentSceneView
 
-
-- (void)setConsentSection:(ORKConsentSection *)consentSection
-{
+- (void)setConsentSection:(ORKConsentSection *)consentSection {
     _consentSection = consentSection;
     
     BOOL isOverview = (consentSection.type == ORKConsentSectionTypeOverview);
     self.verticalCenteringEnabled = isOverview;
     self.continueHugsContent =  isOverview;
-    
-    self.scrollEnabled = NO;
     
     self.headerView.instructionLabel.hidden = ! [[consentSection summary] length];
     self.headerView.captionLabel.text = consentSection.title;
@@ -78,15 +77,15 @@
     [self.continueSkipContainer updateContinueAndSkipEnabled];
 }
 
-
 @end
 
-@interface ORKConsentSceneViewController ()
-{
+
+@interface ORKConsentSceneViewController () {
     ORKConsentSceneView *_sceneView;
 }
 
 @end
+
 
 static NSString *localizedLearnMoreForType(ORKConsentSectionType sectionType) {
     NSString *str = ORKLocalizedString(@"BUTTON_LEARN_MORE", nil);
@@ -123,6 +122,7 @@ static NSString *localizedLearnMoreForType(ORKConsentSectionType sectionType) {
     return str;
 }
 
+
 @implementation ORKConsentSceneViewController
 
 - (instancetype)initWithSection:(ORKConsentSection *)section {
@@ -132,7 +132,6 @@ static NSString *localizedLearnMoreForType(ORKConsentSectionType sectionType) {
         self.learnMoreButtonTitle = _section.customLearnMoreButtonTitle;
     }
     return self;
-
 }
 
 - (void)loadView {
@@ -159,10 +158,8 @@ static NSString *localizedLearnMoreForType(ORKConsentSectionType sectionType) {
 
 - (void)setContinueButtonItem:(UIBarButtonItem *)continueButtonItem {
     _continueButtonItem = continueButtonItem;
-    
     _sceneView.continueSkipContainer.continueButtonItem = continueButtonItem;
 }
-
 
 - (void)setLearnMoreButtonTitle:(NSString *)learnMoreButtonTitle {
     _learnMoreButtonTitle = learnMoreButtonTitle;
@@ -174,15 +171,33 @@ static NSString *localizedLearnMoreForType(ORKConsentSectionType sectionType) {
     }
 }
 
+- (UIScrollView *)scrollView {
+    return (UIScrollView *)self.view;
+}
+
+- (void)scrollToTopAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
+    ORKConsentSceneView *consentSceneView = (ORKConsentSceneView *)self.view;
+    CGRect targetBounds = consentSceneView.bounds;
+    targetBounds.origin.y = 0;
+    if (animated) {
+        [UIView animateWithDuration:ORKScrollToTopAnimationDuration animations:^{
+            consentSceneView.bounds = targetBounds;
+        } completion:completion];
+    } else {
+        consentSceneView.bounds = targetBounds;
+        if (completion) {
+            completion(YES);
+        }
+    }
+}
 
 #pragma mark - Action
 
 - (IBAction)showContent:(id)sender {
-
-    ORKConsentLearnMoreViewController *vc = [[ORKConsentLearnMoreViewController alloc] initWithHTMLContent:(NSString *__nonnull)((_section.htmlContent.length > 0)?_section.htmlContent : _section.escapedContent)];
-    vc.title = ORKLocalizedString(@"CONSENT_LEARN_MORE_TITLE", nil);
-    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self presentViewController:navc animated:YES completion:nil];
+    ORKConsentLearnMoreViewController *viewController = [[ORKConsentLearnMoreViewController alloc] initWithHTMLContent:((_section.htmlContent.length > 0) ? _section.htmlContent : _section.escapedContent)];
+    viewController.title = ORKLocalizedString(@"CONSENT_LEARN_MORE_TITLE", nil);
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {

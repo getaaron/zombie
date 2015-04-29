@@ -28,6 +28,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 #import "ORKAudioStepViewController.h"
 #import "ORKAudioContentView.h"
 #import "ORKActiveStepViewController_Internal.h"
@@ -41,17 +42,17 @@
 #import "ORKActiveStepView.h"
 #import "ORKCustomStepView_Internal.h"
 
+
 @interface ORKAudioStepViewController ()
 
 @property (nonatomic, strong) AVAudioRecorder *avAudioRecorder;
 
 @end
 
-@implementation ORKAudioStepViewController
-{
+
+@implementation ORKAudioStepViewController {
     ORKAudioContentView *_audioContentView;
     ORKAudioRecorder *_audioRecorder;
-    
     ORKActiveStepTimer *_timer;
 }
 
@@ -115,14 +116,13 @@
 
 - (void)startNewTimerIfNeeded {
     if (! _timer) {
-        
         NSTimeInterval duration = self.audioStep.duration;
         __weak typeof(self) weakSelf = self;
         _timer = [[ORKActiveStepTimer alloc] initWithDuration:duration interval:duration/100 runtime:0 handler:^(ORKActiveStepTimer *timer, BOOL finished) {
             typeof(self) strongSelf = weakSelf;
             [strongSelf doSample];
             if (finished) {
-                [self finish];
+                [strongSelf finish];
             }
         }];
         [_timer resume];
@@ -130,11 +130,9 @@
     _audioContentView.finished = NO;
 }
 
-
 - (void)start {
     [super start];
     [self audioRecorderDidChange];
-    
     [_timer reset];
     _timer = nil;
     [self startNewTimerIfNeeded];
@@ -166,7 +164,6 @@
 - (void)setAvAudioRecorder:(AVAudioRecorder *)recorder {
     _avAudioRecorder = nil;
     _avAudioRecorder = recorder;
-    
 }
 
 @end

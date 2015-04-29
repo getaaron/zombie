@@ -34,7 +34,8 @@
 #import "ORKConsentDocument_Internal.h"
 #import "ORKDefines_Private.h"
 
-//Copied from CFXMLParser.c in http://www.opensource.apple.com/source/CF/CF-550.13/CFXMLParser.c
+
+// Copied from CFXMLParser.c in http://www.opensource.apple.com/source/CF/CF-550.13/CFXMLParser.c
 /*
  At the very least we need to do <, >, &, ", and '. In addition, we'll have to do everything else in the string.
  We should also be handling items that are up over certain values correctly.
@@ -85,17 +86,13 @@ static CFStringRef CFXMLCreateStringByEscapingEntities(CFAllocatorRef allocator,
         CFStringAppend(newString, remainder);
         CFRelease(remainder);
     }
-    
     CFRelease(startChars);
     return newString;
 }
 
-
-
 @implementation ORKConsentSection {
     NSString *_escapedContent;
 }
-
 
 static NSString *localizedTitleForConsentSectionType(ORKConsentSectionType sectionType) {
     NSString *str = nil;
@@ -141,20 +138,16 @@ static NSString *localizedTitleForConsentSectionType(ORKConsentSectionType secti
     return self;
 }
 
-
-+ (BOOL)supportsSecureCoding
-{
++ (BOOL)supportsSecureCoding {
     return YES;
 }
 
-- (void)setContent:(NSString *)content
-{
+- (void)setContent:(NSString *)content {
     _content = content;
     _escapedContent = nil;
 }
 
 - (NSString *)escapedContent {
-    
     if (_content == nil || _content.length == 0) {
         return _content;
     }
@@ -165,15 +158,12 @@ static NSString *localizedTitleForConsentSectionType(ORKConsentSectionType secti
         // Use <br/> to replace "\n"
         _escapedContent = [_escapedContent stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
     }
-    
     return _escapedContent;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super init];
-    if (self)
-    {
+    if (self) {
         ORK_DECODE_ENUM(aDecoder, type);
         ORK_DECODE_OBJ_CLASS(aDecoder, title, NSString);
         ORK_DECODE_OBJ_CLASS(aDecoder, summary, NSString);
@@ -187,8 +177,7 @@ static NSString *localizedTitleForConsentSectionType(ORKConsentSectionType secti
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
+- (void)encodeWithCoder:(NSCoder *)aCoder {
     ORK_ENCODE_ENUM(aCoder, type);
     ORK_ENCODE_OBJ(aCoder, title);
     ORK_ENCODE_OBJ(aCoder, formalTitle);
@@ -221,9 +210,7 @@ static NSString *localizedTitleForConsentSectionType(ORKConsentSectionType secti
     return [_title hash] ^ _type;
 }
 
-
-- (instancetype)copyWithZone:(NSZone *)zone
-{
+- (instancetype)copyWithZone:(NSZone *)zone {
     ORKConsentSection *sec = [[[self class] allocWithZone:zone] init];
     sec.title = _title;
     sec.formalTitle = _formalTitle;
@@ -237,7 +224,5 @@ static NSString *localizedTitleForConsentSectionType(ORKConsentSectionType secti
     
     return sec;
 }
-
-
 
 @end

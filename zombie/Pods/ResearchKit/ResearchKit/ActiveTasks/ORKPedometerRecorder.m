@@ -34,14 +34,12 @@
 #import "ORKRecorder_Internal.h"
 #import "ORKRecorder_Private.h"
 
-@interface ORKPedometerRecorder()
-{
+@interface ORKPedometerRecorder() {
     ORKDataLogger *_logger;
     BOOL _isRecording;
 }
 
 @property (nonatomic, strong) CMPedometer *pedometer;
-@property (nonatomic, strong) NSError *recordingError;
 
 @end
 
@@ -49,21 +47,20 @@
 @implementation ORKPedometerRecorder
 
 
-- (instancetype)initWithStep:(ORKStep *)step
-             outputDirectory:(NSURL *)outputDirectory
-{
-    self = [super initWithStep:step
-               outputDirectory:(NSURL *)outputDirectory];
-    if (self)
-    {
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                              step:(ORKStep *)step
+                   outputDirectory:(NSURL *)outputDirectory {
+    self = [super initWithIdentifier:identifier
+                                step:step
+                     outputDirectory:outputDirectory];
+    if (self) {
         self.continuesInBackground = YES;
     }
     return self;
 }
 
 
-- (void)dealloc
-{
+- (void)dealloc {
     [_logger finishCurrentLog];
 }
 
@@ -108,8 +105,7 @@
     
     self.pedometer = [self createPedometer];
     
-    if (! [[self.pedometer class] isStepCountingAvailable])
-    {
+    if (! [[self.pedometer class] isStepCountingAvailable]) {
         [self finishRecordingWithError:[NSError errorWithDomain:NSCocoaErrorDomain
                                                            code:NSFeatureUnsupportedError
                                                        userInfo:@{@"recorder" : self}]];
@@ -121,16 +117,14 @@
     [self.pedometer startPedometerUpdatesFromDate:[NSDate date] withHandler:^(CMPedometerData *pedometerData, NSError *error) {
         
         BOOL success = NO;
-        if (pedometerData)
-        {
+        if (pedometerData) {
             success = [_logger append:[pedometerData ork_JSONDictionary] error:&error];
             dispatch_async(dispatch_get_main_queue(), ^{
                 __typeof(self) strongSelf = weakSelf;
                 [strongSelf updateStatisticsWithData:pedometerData];
             });
         }
-        if (!success || error)
-        {
+        if (!success || error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 __typeof(self) strongSelf = weakSelf;
                 [strongSelf finishRecordingWithError:error];
@@ -140,8 +134,7 @@
 }
 
 
-- (NSString *)recorderType
-{
+- (NSString *)recorderType {
     return @"pedometer";
 }
 
@@ -163,8 +156,7 @@
     [super stop];
 }
 
-- (void)doStopRecording
-{
+- (void)doStopRecording {
     if (_isRecording) {
         [self.pedometer stopPedometerUpdates];
         _isRecording = NO;
@@ -172,8 +164,7 @@
     }
 }
 
-- (void)finishRecordingWithError:(NSError *)error
-{
+- (void)finishRecordingWithError:(NSError *)error {
     [self doStopRecording];
     [super finishRecordingWithError:error];
 }
@@ -186,8 +177,7 @@
     return @"application/json";
 }
 
-- (void)reset
-{
+- (void)reset {
     [super reset];
     
     _logger = nil;
@@ -202,26 +192,23 @@
 
 @implementation ORKPedometerRecorderConfiguration
 
-- (instancetype)init {
-    self = [super ork_init];
-    return self;
+- (instancetype)initWithIdentifier:(NSString *)identifier {
+    return [super initWithIdentifier:identifier];
 }
 
-- (ORKRecorder *)recorderForStep:(ORKStep *)step outputDirectory:(NSURL *)outputDirectory
-{
-    return [[ORKPedometerRecorder alloc] initWithStep:step
-                                     outputDirectory:outputDirectory];
+- (ORKRecorder *)recorderForStep:(ORKStep *)step outputDirectory:(NSURL *)outputDirectory {
+    return [[ORKPedometerRecorder alloc] initWithIdentifier:self.identifier
+                                                       step:step
+                                            outputDirectory:outputDirectory];
 }
 
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     return self;
 }
 
-+ (BOOL)supportsSecureCoding
-{
++ (BOOL)supportsSecureCoding {
     return YES;
 }
 

@@ -36,37 +36,34 @@
 #import "ORKSkin.h"
 #import "ORKVerticalContainerView.h"
 #import "ORKVerticalContainerView_Internal.h"
-#import "ORKSkin.h"
+
 
 @interface ORKConsentReviewController()<UIWebViewDelegate>
 
 @end
 
-@implementation ORKConsentReviewController
-{
+
+@implementation ORKConsentReviewController {
     UIToolbar *_toolbar;
     NSLayoutConstraint *_toolbarHeightConstraint;
     NSString *_htmlString;
 }
 
-
 - (instancetype)initWithHTML:(NSString *)html delegate:(id<ORKConsentReviewControllerDelegate>)delegate {
-
     self = [super init];
     if (self) {
         _htmlString = html;
         _delegate = delegate;
         
-        self.toolbarItems = [NSArray arrayWithObjects:
+        self.toolbarItems = @[
                              [[UIBarButtonItem alloc] initWithTitle:ORKLocalizedString(@"BUTTON_DISAGREE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancel)],
                              [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-                             [[UIBarButtonItem alloc] initWithTitle:ORKLocalizedString(@"BUTTON_AGREE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(ack)], nil];
+                             [[UIBarButtonItem alloc] initWithTitle:ORKLocalizedString(@"BUTTON_AGREE", nil) style:UIBarButtonItemStylePlain target:self action:@selector(ack)]];
     }
     return self;
 }
 
 - (void)viewDidLoad {
-
     [super viewDidLoad];
     
     _toolbar = [[UIToolbar alloc] init];
@@ -133,9 +130,7 @@
     }]];
     
     [self presentViewController:alert animated:YES completion:nil];
-    
 }
-
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if (navigationType != UIWebViewNavigationTypeOther) {
@@ -146,11 +141,3 @@
 }
 
 @end
-
-
-
-
-
-
-
-

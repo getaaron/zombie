@@ -44,39 +44,32 @@
 
 @implementation ORKAudioRecorder
 
-- (void)dealloc
-{
+- (void)dealloc {
     ORK_Log_Debug(@"Remove audiorecorder %p", self);
     [_audioRecorder stop];
     _audioRecorder = nil;
 }
 
 
-+ (NSDictionary *)defaultRecorderSettings
-{
-    return [NSDictionary
-            dictionaryWithObjectsAndKeys:
-            @(kAudioFormatMPEG4AAC), AVFormatIDKey,
-            @(AVAudioQualityMin), AVEncoderAudioQualityKey,
-            @(2), AVNumberOfChannelsKey,
-            @(44100.0), AVSampleRateKey,
-            nil];
++ (NSDictionary *)defaultRecorderSettings {
+    return @{AVFormatIDKey              : @(kAudioFormatMPEG4AAC),
+             AVEncoderAudioQualityKey   : @(AVAudioQualityMin),
+             AVNumberOfChannelsKey      : @(2),
+             AVSampleRateKey            : @(44100.0)};
 }
 
-- (instancetype)initWithRecorderSettings:(NSDictionary *)recorderSettings
-                                    step:(ORKStep *)step
-                         outputDirectory:(NSURL *)outputDirectory
-{
-    self = [super initWithStep:step outputDirectory:outputDirectory];
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                  recorderSettings:(NSDictionary *)recorderSettings
+                              step:(ORKStep *)step
+                   outputDirectory:(NSURL *)outputDirectory {
+    self = [super initWithIdentifier:identifier step:step outputDirectory:outputDirectory];
     if (self) {
         
         self.continuesInBackground = YES;
-        if (! recorderSettings)
-        {
+        if (! recorderSettings) {
             recorderSettings = [[self class] defaultRecorderSettings];
         }
-        if (! [recorderSettings isKindOfClass:[NSDictionary class]])
-        {
+        if (! [recorderSettings isKindOfClass:[NSDictionary class]]) {
             @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"recorderSettings should be a dictionary" userInfo:recorderSettings];
         }
         self.recorderSettings = recorderSettings;
@@ -115,16 +108,14 @@
         }
         
 #if ! TARGET_IPHONE_SIMULATOR
-        if (!_audioRecorder.recording)
-        {
+        if (!_audioRecorder.recording) {
             [_audioRecorder prepareToRecord];
         }
 #endif
     }
     
 #if ! TARGET_IPHONE_SIMULATOR
-    if (!_audioRecorder.recording)
-    {
+    if (!_audioRecorder.recording) {
         [_audioRecorder prepareToRecord];
         [_audioRecorder record];
     }
@@ -161,8 +152,7 @@
     unsigned int recorderFormat = [recorderSettings[AVFormatIDKey] unsignedIntValue];
     
     NSString *contentType = @"audio";
-    switch (recorderFormat)
-    {
+    switch (recorderFormat) {
         case kAudioFormatLinearPCM:
         {
             int numBits = [recorderSettings[AVLinearPCMBitDepthKey] intValue] ? : 16;
@@ -189,13 +179,11 @@
 }
 
 
-- (NSString *)recorderType
-{
+- (NSString *)recorderType {
     return @"audio";
 }
 
-- (void)doStopRecording
-{
+- (void)doStopRecording {
     if (self.isRecording) {
 #if ! TARGET_IPHONE_SIMULATOR
         [_audioRecorder stop];
@@ -205,21 +193,18 @@
     }
 }
 
-- (void)finishRecordingWithError:(NSError *)error
-{
+- (void)finishRecordingWithError:(NSError *)error {
     [self doStopRecording];
     
     [super finishRecordingWithError:error];
 }
 
-- (NSString *)extension
-{
+- (NSString *)extension {
     NSDictionary *recorderSettings = [self recorderSettings];
     unsigned int recorderFormat = [recorderSettings[AVFormatIDKey] unsignedIntValue];
     
     NSString *extension = @"au";
-    switch (recorderFormat)
-    {
+    switch (recorderFormat) {
         case kAudioFormatLinearPCM:
         {
             extension = @"pcm";
@@ -239,14 +224,12 @@
     return extension;
 }
 
-- (NSURL *)recordingFileURL
-{
+- (NSURL *)recordingFileURL {
     return [[self recordingDirectoryURL] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", [self logName], [self extension]]];
 }
 
 
-- (BOOL)recreateFileWithError:(NSError * __autoreleasing *)error
-{
+- (BOOL)recreateFileWithError:(NSError * __autoreleasing *)error {
     NSURL *url = [self recordingFileURL];
     if (! url) {
         if (error) {
@@ -255,20 +238,20 @@
         return NO;
     }
     
-    NSFileManager *fm = [NSFileManager defaultManager];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    if (! [fm createDirectoryAtURL:url withIntermediateDirectories:YES attributes:nil error:error]) {
+    if (! [fileManager createDirectoryAtURL:url withIntermediateDirectories:YES attributes:nil error:error]) {
         return NO;
     }
     
-    if ([fm fileExistsAtPath:[url path]]) {
-        if (! [fm removeItemAtPath:[url path] error:error]) {
+    if ([fileManager fileExistsAtPath:[url path]]) {
+        if (! [fileManager removeItemAtPath:[url path] error:error]) {
             return NO;
         }
     }
     
-    [fm createFileAtPath:[url path] contents:nil attributes:nil];
-    [fm setAttributes:@{NSFileProtectionKey : ORKFileProtectionFromMode(ORKFileProtectionCompleteUnlessOpen)} ofItemAtPath:[url path] error:error];
+    [fileManager createFileAtPath:[url path] contents:nil attributes:nil];
+    [fileManager setAttributes:@{NSFileProtectionKey : ORKFileProtectionFromMode(ORKFileProtectionCompleteUnlessOpen)} ofItemAtPath:[url path] error:error];
     return YES;
 }
 
@@ -290,47 +273,47 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
-- (instancetype)initWithRecorderSettings:(NSDictionary *)recorderSettings
-{
-    self = [self ork_init];
-    if (self)
-    {
-        if (recorderSettings && ! [recorderSettings isKindOfClass:[NSDictionary class]])
-        {
+
+- (instancetype)initWithIdentifier:(NSString *)identifier {
+    @throw [NSException exceptionWithName:NSGenericException reason:@"Use subclass designated initializer" userInfo:nil];
+}
+
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                  recorderSettings:(NSDictionary *)recorderSettings {
+    self = [super initWithIdentifier:identifier];
+    if (self) {
+        if (recorderSettings && ! [recorderSettings isKindOfClass:[NSDictionary class]]) {
             @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"recorderSettings should be a dictionary" userInfo:recorderSettings];
         }
         _recorderSettings = recorderSettings;
     }
     return self;
 }
+
 #pragma clang diagnostic pop
 
 - (ORKRecorder *)recorderForStep:(ORKStep *)step
-                outputDirectory:(NSURL *)outputDirectory
-{
-    return [[ORKAudioRecorder alloc] initWithRecorderSettings:(NSDictionary *__nonnull)self.recorderSettings
-                                                        step:step
-                                             outputDirectory:outputDirectory];
+                 outputDirectory:(NSURL *)outputDirectory {
+    return [[ORKAudioRecorder alloc] initWithIdentifier:self.identifier
+                                       recorderSettings:self.recorderSettings
+                                                   step:step
+                                        outputDirectory:outputDirectory];
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    if (self)
-    {
+    if (self) {
         ORK_DECODE_OBJ_CLASS(aDecoder, recorderSettings, NSDictionary);
     }
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
+- (void)encodeWithCoder:(NSCoder *)aCoder {
     [super encodeWithCoder:aCoder];
     ORK_ENCODE_OBJ(aCoder, recorderSettings);
 }
 
-+ (BOOL)supportsSecureCoding
-{
++ (BOOL)supportsSecureCoding {
     return YES;
 }
 

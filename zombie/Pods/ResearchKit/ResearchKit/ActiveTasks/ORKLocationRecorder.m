@@ -35,8 +35,7 @@
 #import "ORKRecorder_Internal.h"
 #import "ORKRecorder_Private.h"
 
-@interface ORKLocationRecorder() <CLLocationManagerDelegate>
-{
+@interface ORKLocationRecorder() <CLLocationManagerDelegate> {
     ORKDataLogger *_logger;
     NSError *_recordingError;
     BOOL _started;
@@ -49,19 +48,15 @@
 
 @implementation ORKLocationRecorder
 
-
-- (instancetype)initWithStep:(ORKStep *)step outputDirectory:(NSURL *)outputDirectory
-{
-    self = [super initWithStep:step outputDirectory:outputDirectory];
-    if (self)
-    {
+- (instancetype)initWithIdentifier:(NSString *)identifier step:(ORKStep *)step outputDirectory:(NSURL *)outputDirectory {
+    self = [super initWithIdentifier:identifier step:step outputDirectory:outputDirectory];
+    if (self) {
         self.continuesInBackground = YES;
     }
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [_logger finishCurrentLog];
 }
 
@@ -86,8 +81,7 @@
     }
     
     self.locationManager = [self createLocationManager];
-    if ([CLLocationManager authorizationStatus] <= kCLAuthorizationStatusDenied)
-    {
+    if ([CLLocationManager authorizationStatus] <= kCLAuthorizationStatusDenied) {
         [self.locationManager requestWhenInUseAuthorization];
     }
     self.locationManager.pausesLocationUpdatesAutomatically = NO;
@@ -129,13 +123,11 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray *)locations
-{
+     didUpdateLocations:(NSArray *)locations {
     BOOL success = YES;
     NSParameterAssert([locations count] >= 0);
     NSError *error = nil;
-    if (locations)
-    {
+    if (locations) {
         NSMutableArray *dictionaries = [NSMutableArray arrayWithCapacity:[locations count]];
         [locations enumerateObjectsUsingBlock:^(CLLocation *obj, NSUInteger idx, BOOL *stop) {
             NSDictionary *d = [obj ork_JSONDictionary];
@@ -144,8 +136,7 @@
         
         success = [_logger appendObjects:dictionaries error:&error];
     }
-    if (!success)
-    {
+    if (!success) {
         dispatch_async(dispatch_get_main_queue(), ^{
             _recordingError = error;
             [self stop];
@@ -153,8 +144,7 @@
     }
 }
 
-- (void)finishRecordingWithError:(NSError *)error
-{
+- (void)finishRecordingWithError:(NSError *)error {
     [self doStopRecording];
     [super finishRecordingWithError:nil];
 }
@@ -163,8 +153,7 @@
     return [CLLocationManager locationServicesEnabled] && (self.locationManager != nil) && ([CLLocationManager authorizationStatus] > kCLAuthorizationStatusDenied);
 }
 
-- (void)reset
-{
+- (void)reset {
     [super reset];
     
     _logger = nil;
@@ -183,19 +172,20 @@
 
 @implementation ORKLocationRecorderConfiguration
 
-- (ORKRecorder *)recorderForStep:(ORKStep *)step outputDirectory:(NSURL *)outputDirectory {
-    return [[ORKLocationRecorder alloc] initWithStep:step outputDirectory:outputDirectory];
+- (instancetype)initWithIdentifier:(NSString *)identifier {
+    return [super initWithIdentifier:identifier];
 }
 
-
+- (ORKRecorder *)recorderForStep:(ORKStep *)step outputDirectory:(NSURL *)outputDirectory {
+    return [[ORKLocationRecorder alloc] initWithIdentifier:self.identifier step:step outputDirectory:outputDirectory];
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     return self;
 }
 
-+ (BOOL)supportsSecureCoding
-{
++ (BOOL)supportsSecureCoding {
     return YES;
 }
 

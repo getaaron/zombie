@@ -36,8 +36,7 @@
 #import <CoreMotion/CoreMotion.h>
 #import "CMDeviceMotion+ORKJSONDictionary.h"
 
-@interface ORKDeviceMotionRecorder()
-{
+@interface ORKDeviceMotionRecorder() {
     ORKDataLogger *_logger;
 }
 
@@ -50,14 +49,14 @@
 @implementation ORKDeviceMotionRecorder
 
 
-- (instancetype)initWithFrequency:(double)frequency
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                         frequency:(double)frequency
                              step:(ORKStep *)step
-                  outputDirectory:(NSURL *)outputDirectory
-{
-    self = [super initWithStep:step
-               outputDirectory:(NSURL *)outputDirectory];
-    if (self)
-    {
+                  outputDirectory:(NSURL *)outputDirectory {
+    self = [super initWithIdentifier:identifier
+                                step:step
+                     outputDirectory:outputDirectory];
+    if (self) {
         self.frequency = frequency;
         self.continuesInBackground = YES;
     }
@@ -65,19 +64,14 @@
 }
 
 
-- (void)dealloc
-{
+- (void)dealloc {
     [_logger finishCurrentLog];
 }
 
-- (void)setFrequency:(double)frequency
-{
-    if (frequency <= 0)
-    {
+- (void)setFrequency:(double)frequency {
+    if (frequency <= 0) {
         _frequency = 1;
-    }
-    else
-    {
+    } else {
         _frequency = frequency;
     }
 }
@@ -125,8 +119,7 @@
 }
 
 
-- (NSString *)recorderType
-{
+- (NSString *)recorderType {
     return @"deviceMotion";
 }
 
@@ -146,16 +139,14 @@
     [super stop];
 }
 
-- (void)doStopRecording
-{
+- (void)doStopRecording {
     if (self.isRecording) {
         [self.motionManager stopDeviceMotionUpdates];
         self.motionManager = nil;
     }
 }
 
-- (void)finishRecordingWithError:(NSError *)error
-{
+- (void)finishRecordingWithError:(NSError *)error {
     [self doStopRecording];
     [super finishRecordingWithError:error];
 }
@@ -168,8 +159,7 @@
     return @"application/json";
 }
 
-- (void)reset
-{
+- (void)reset {
     [super reset];
     
     _logger = nil;
@@ -186,41 +176,42 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
-- (instancetype)initWithFrequency:(double)freq {
-    self = [super ork_init];
+
+- (instancetype)initWithIdentifier:(NSString *)identifier {
+    @throw [NSException exceptionWithName:NSGenericException reason:@"Use subclass designated initializer" userInfo:nil];
+}
+
+- (instancetype)initWithIdentifier:(NSString *)identifier frequency:(double)freq {
+    self = [super initWithIdentifier:identifier];
     if (self) {
         _frequency = freq;
     }
     return self;
 }
+
 #pragma clang diagnostic pop
 
-- (ORKRecorder *)recorderForStep:(ORKStep *)step outputDirectory:(NSURL *)outputDirectory
-{
-    return [[ORKDeviceMotionRecorder alloc] initWithFrequency:self.frequency
-                                                        step:step
-                                             outputDirectory:(NSURL *)outputDirectory];
+- (ORKRecorder *)recorderForStep:(ORKStep *)step outputDirectory:(NSURL *)outputDirectory {
+    return [[ORKDeviceMotionRecorder alloc] initWithIdentifier:self.identifier
+                                                     frequency:self.frequency
+                                                          step:step
+                                               outputDirectory:outputDirectory];
 }
 
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    if (self)
-    {
+    if (self) {
         ORK_DECODE_DOUBLE(aDecoder, frequency);
     }
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
+- (void)encodeWithCoder:(NSCoder *)aCoder {
     [super encodeWithCoder:aCoder];
     ORK_ENCODE_DOUBLE(aCoder, frequency);
 }
 
-+ (BOOL)supportsSecureCoding
-{
++ (BOOL)supportsSecureCoding {
     return YES;
 }
 

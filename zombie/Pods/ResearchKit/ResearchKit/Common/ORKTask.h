@@ -34,6 +34,7 @@
 #import <ResearchKit/ORKStep.h>
 #import <ResearchKit/ORKResult.h>
 
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -137,7 +138,6 @@ ORK_AVAILABLE_DECL
 - (nullable ORKStep *)stepBeforeStep:(nullable ORKStep *)step withResult:(ORKTaskResult *)result;
 
 @optional
-
 /**
  Returns the step that matches the specified identifier.
  
@@ -159,7 +159,6 @@ ORK_AVAILABLE_DECL
  this method to control what is displayed; if you don't implement this method, the progress label does not appear.
  If the returned `ORKTaskProgress` object has a count of 0, the progress is not displayed.
 
- 
  @param step    The current step.
  @param result  A snapshot of the current set of results.
  
@@ -182,7 +181,6 @@ requests access to these HealthKit types.
  See also: `requestedHealthKitTypesForWriting`.
  */
 @property (nonatomic, copy, readonly, nullable) NSSet *requestedHealthKitTypesForReading;
-
 
 /**
  The set of HealthKit types for which the task needs to request write access.
@@ -216,8 +214,6 @@ requests access to these HealthKit types.
  */
 @property (nonatomic, readonly) BOOL providesBackgroundAudioPrompts;
 
-
 @end
 
 NS_ASSUME_NONNULL_END
-
